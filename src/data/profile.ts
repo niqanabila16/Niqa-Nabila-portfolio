@@ -90,10 +90,10 @@ export const profile: Profile = {
   documents: {
     /** One CV per role, in /public/cv. */
     cvs: {
-      'business-analyst': { label: 'CV', url: '/cv/cv-business-analyst.pdf' },
-      'quality-assurance': { label: 'CV', url: '/cv/cv-quality-assurance.pdf' },
-      'software-engineer': { label: 'CV', url: '/cv/cv-software-engineer.pdf' },
-      'data-science': { label: 'CV', url: '/cv/cv-data-science.pdf' },
+      'business-analyst': { label: 'CV', url: '/cv/CV_Niqa_Nabila_BusinessAnalyst.pdf' },
+      'quality-assurance': { label: 'CV', url: '/cv/CV_Niqa_Nabila_QualityAssurance.pdf' },
+      'software-engineer': { label: 'CV', url: '/cv/CV_Niqa_Nabila_SoftwareEngineer.pdf' },
+      'data-science': { label: 'CV', url: '/cv/CV_Niqa_Nabila_DataScience.pdf' },
     },
     qaPortfolio: { label: 'QA portfolio', url: '/Portfolio_Niqa Nabila Nur Ihsani_QA.pdf' },
   },
