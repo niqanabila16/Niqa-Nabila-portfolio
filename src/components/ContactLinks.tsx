@@ -1,11 +1,8 @@
-import { useState } from 'react'
 import { profile } from '../data'
-import { DocViewer } from './DocActions'
+import CvButton from './CvButton'
 
 /** Contact pills come from src/data/profile.ts. Empty URLs render as disabled, never as fake links. */
 export default function ContactLinks() {
-  const [cvOpen, setCvOpen] = useState(false)
-  const cv = profile.documents.cv
   return (
     <ul className="pill-links" aria-label="Contact and profiles">
       {profile.links.filter((l) => l.url).map((link) => {
@@ -25,16 +22,10 @@ export default function ContactLinks() {
         )
       })}
       <li>
-        {cv.url ? (
-          <>
-            <button type="button" className="pill-link pill-link--button" onClick={() => setCvOpen(true)} aria-haspopup="dialog">
-              {cv.label}
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg>
-            </button>
-            <DocViewer doc={cv} open={cvOpen} onClose={() => setCvOpen(false)} />
-          </>
-        
-        ) : null}
+        <CvButton className="pill-link pill-link--button">
+          CV
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg>
+        </CvButton>
       </li>
     </ul>
   )

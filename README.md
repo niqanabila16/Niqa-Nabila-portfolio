@@ -172,7 +172,7 @@ public/                  favicon.svg, models/puppet-hand.glb (taruh cv.pdf dan q
 
 | File | Where | Shown as |
 | --- | --- | --- |
-| CV (PDF) | `public/cv.pdf` | Download CV and Preview in every role header, View CV in the navbar |
+| CV per role (PDF) | `public/cv/cv-business-analyst.pdf`, `cv-quality-assurance.pdf`, `cv-software-engineer.pdf`, `cv-data-science.pdf` | Download CV and Preview in that role's header. "View CV" in the navbar opens the CV of the role or project being viewed, or a list of all CVs on the home page |
 | QA portfolio (PDF) | `public/qa-portfolio.pdf` | Next to the CV buttons in the Quality Assurance header |
 | Thesis paper (PDF) | `public/docs/msc-thesis.pdf`, then add a link in `src/data/projects.ts` (`msc-segmentation`) | Button in the project header |
 

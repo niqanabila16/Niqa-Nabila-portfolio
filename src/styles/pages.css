@@ -363,3 +363,8 @@ th { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; colo
 .project-links { list-style: none; margin: 0.4rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .doc-actions { display: inline-flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
 .role-hero__actions { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; }
+
+.cv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.cv-list__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1rem; padding: 0.7rem 0.9rem; background: var(--card); border-radius: var(--r-md); }
+.cv-list__name { font-weight: 600; }
+.cv-list__actions { display: inline-flex; gap: 0.5rem; }

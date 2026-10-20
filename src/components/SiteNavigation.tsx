@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { profile, roles } from '../data'
-import { DocViewer } from './DocActions'
+import CvButton from './CvButton'
 
 export default function SiteNavigation() {
   const { pathname } = useLocation()
   // The menu is "open for a given path", so it closes by itself after any navigation.
   const [openPath, setOpenPath] = useState<string | null>(null)
   const open = openPath === pathname
-  const cv = profile.documents.cv
-  const [cvOpen, setCvOpen] = useState(false)
 
   useEffect(() => {
     if (!open) return
@@ -40,16 +38,7 @@ export default function SiteNavigation() {
         </nav>
 
         <div className="nav-actions">
-          {cv.url ? (
-            <>
-              <button type="button" className="btn btn--sun btn--sm" onClick={() => setCvOpen(true)} aria-haspopup="dialog">
-                View CV
-              </button>
-              <DocViewer doc={cv} open={cvOpen} onClose={() => setCvOpen(false)} />
-            </>
-          ) : (
-            <Link className="btn btn--sun btn--sm" to="/#contact">Contact</Link>
-          )}
+          <CvButton className="btn btn--sun btn--sm">View CV</CvButton>
           <button
             type="button"
             className="nav-toggle"

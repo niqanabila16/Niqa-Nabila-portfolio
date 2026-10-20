@@ -49,7 +49,7 @@ export default function RolePage() {
               ))}
             </ul>
             <div className="role-hero__actions">
-              <DocActions doc={profile.documents.cv} tone="sun" short="CV" />
+              <DocActions doc={profile.documents.cvs[role.id]} tone="sun" short="CV" />
               {isQa && <DocActions doc={profile.documents.qaPortfolio} tone="dark" short="QA portfolio" />}
             </div>
           </div>

@@ -187,5 +187,5 @@ export interface Profile {
   background: BackgroundEntry[]
   links: { label: string; url: string }[]
   prototypes: PrototypeLink[]
-  documents: { cv: DocumentLink; qaPortfolio: DocumentLink }
+  documents: { cvs: Record<RoleId, DocumentLink>; qaPortfolio: DocumentLink }
 }
