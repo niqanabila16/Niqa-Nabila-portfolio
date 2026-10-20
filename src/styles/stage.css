@@ -1,0 +1,414 @@
+/* ------------------------------------------------------------------ */
+/* Stage                                                               */
+/* ------------------------------------------------------------------ */
+.stage {
+  --tag-w: clamp(150px, 15.5vw, 212px);
+  /* How far the curtains gather. Read by the GSAP timeline so CSS and JS always agree. */
+  --gathered: 0.12;
+  position: relative;
+  height: calc(100svh - var(--header-h));
+  min-height: 600px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--cream);
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+}
+
+.stage__scenery {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Name bubble, shown once the curtains are open */
+.stage__heading {
+  position: absolute;
+  z-index: 4;
+  top: clamp(64px, 10%, 92px);
+  left: clamp(112px, 9%, 190px);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 1rem 0.4rem 0.4rem;
+  background: rgba(251, 246, 234, 0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+}
+.stage__badge {
+  padding: 0.25rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--burgundy);
+  border-radius: 999px;
+}
+.stage__heading h1 {
+  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: var(--ink);
+}
+.stage__heading h1:focus { outline: none; }
+
+/* ------------------------------------------------------------------ */
+/* Hand: lowered from above, palm facing the viewer                    */
+/* ------------------------------------------------------------------ */
+.hand-anchor {
+  position: absolute;
+  z-index: 2;
+  top: -11%;
+  left: 50%;
+  translate: -50% 0;
+  height: 62%;
+  max-height: 760px;
+  aspect-ratio: 4 / 5;
+}
+.hand-wrap,
+.hand {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* Paper-hand fallback: drawn upright, turned so the fingers hang down like a puppeteer's. */
+.hand { rotate: 180deg; }
+
+/* Wooden puppet hand (three.js canvas) and the little rings where each thread is tied */
+.hand3d { position: relative; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease; }
+.hand3d[data-ready='true'] { opacity: 1; }
+.hand3d canvas { display: block; width: 100%; height: 100%; }
+.finger-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  translate: -50% -50%;
+  background: var(--paper);
+  border: 2px solid var(--burgundy);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(40, 20, 20, 0.35);
+  pointer-events: none;
+}
+.finger-ring::after { content: ''; position: absolute; inset: 3px; background: var(--burgundy-deep); border-radius: 50%; }
+
+.stage-lip {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(34px, 7%, 60px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Threads                                                             */
+/* ------------------------------------------------------------------ */
+.threads {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.thread path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.thread__line { stroke: var(--burgundy-deep); stroke-width: 1.8; }
+.thread__shadow { stroke: rgba(40, 20, 20, 0.16); stroke-width: 2.8; }
+
+/* ------------------------------------------------------------------ */
+/* Tags: rounded paper bubbles that hang from the threads              */
+/* ------------------------------------------------------------------ */
+.tags {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+.tag-slot {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--tag-w);
+  translate: -50% -50%;
+}
+.tag-slot:nth-child(1) { --x: 19%; --y: 59%; --rest: -3deg; }
+.tag-slot:nth-child(2) { --x: 38%; --y: 73%; --rest: 2.5deg; }
+.tag-slot:nth-child(3) { --x: 62%; --y: 73%; --rest: -2deg; }
+.tag-slot:nth-child(4) { --x: 81%; --y: 59%; --rest: 3deg; }
+
+.tag--terracotta { --tag-bg: #f0b9a2; }
+.tag--sage { --tag-bg: #c5d6c0; }
+.tag--blue { --tag-bg: #bcd0e0; }
+.tag--rose { --tag-bg: #f0cfca; }
+
+.tag {
+  position: relative;
+  display: block;
+  pointer-events: auto;
+  color: var(--ink);
+  text-decoration: none;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+.tag:hover { color: var(--ink); }
+.tag:focus-visible {
+  outline: 3px solid var(--burgundy-deep);
+  outline-offset: 8px;
+  border-radius: 34px;
+}
+
+.tag__enter {
+  display: block;
+  filter: drop-shadow(0 6px 6px rgba(58, 29, 29, 0.26));
+  transition: filter 0.35s ease;
+}
+.tag:hover .tag__enter,
+.tag:focus-visible .tag__enter {
+  filter: drop-shadow(0 14px 12px rgba(58, 29, 29, 0.32));
+}
+
+.tag__paper {
+  position: relative;
+  display: block;
+  padding: 2.05rem 1.1rem 1.05rem;
+  background: var(--tag-bg);
+  border-radius: 28px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+  transform: translateY(var(--lift, 0)) rotate(calc(var(--rest, 0deg) + var(--tilt, 0deg))) scale(var(--grow, 1));
+  transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tag:hover .tag__paper,
+.tag:focus-visible .tag__paper {
+  --grow: 1.04;
+  --tilt: 1.6deg;
+}
+.tag-slot:nth-child(even) .tag:hover .tag__paper,
+.tag-slot:nth-child(even) .tag:focus-visible .tag__paper { --tilt: -1.6deg; }
+
+.tag__eyelet {
+  position: absolute;
+  left: 50%;
+  top: 11px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2c1a1c 0 34%, var(--paper) 40% 62%, rgba(92, 32, 48, 0.55) 66%);
+}
+.tag__number {
+  display: block;
+  font: 700 0.72rem var(--font-body);
+  letter-spacing: 0.14em;
+  color: rgba(58, 42, 40, 0.65);
+}
+.tag__title {
+  display: block;
+  margin: 0.1rem 0 0.3rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.55vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.12;
+}
+/* Line and hint share one grid cell, so revealing the hint never changes the tag's size. */
+.tag__swap { display: grid; }
+.tag__line,
+.tag__hint { grid-area: 1 / 1; display: block; font-size: 0.86rem; line-height: 1.35; transition: opacity 0.3s ease; }
+.tag__hint { font-weight: 700; color: var(--burgundy-deep); opacity: 0; }
+.tag:hover .tag__line,
+.tag:focus-visible .tag__line { opacity: 0; }
+.tag:hover .tag__hint,
+.tag:focus-visible .tag__hint { opacity: 1; }
+
+/* ------------------------------------------------------------------ */
+/* Curtains and valance                                                */
+/* ------------------------------------------------------------------ */
+.curtains {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+.curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.6%;
+  will-change: transform;
+}
+.curtain--left { left: 0; transform-origin: 0 50%; }
+.curtain--right { right: 0; transform-origin: 100% 50%; }
+
+.curtain__cloth,
+.curtain__shade { position: absolute; inset: 0; }
+.curtain__cloth {
+  background:
+    linear-gradient(180deg, rgba(20, 6, 10, 0.32), transparent 24%, transparent 78%, rgba(20, 6, 10, 0.22)),
+    repeating-linear-gradient(90deg, #7a2e3b 0, #96404f 3.2%, #6a2433 6.4%, #7a2e3b 9%);
+}
+.curtain--left .curtain__cloth {
+  clip-path: polygon(0 0, 100% 0, 99.2% 13%, 100% 30%, 99% 51%, 100% 73%, 99.3% 100%, 0 100%);
+}
+.curtain--right .curtain__cloth {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0.7% 100%, 1% 73%, 0 51%, 1% 30%, 0 13%);
+}
+.curtain__shade { opacity: 0.9; }
+.curtain--left .curtain__shade { background: linear-gradient(to left, rgba(20, 6, 10, 0.6), transparent 24%); }
+.curtain--right .curtain__shade { background: linear-gradient(to right, rgba(20, 6, 10, 0.6), transparent 24%); }
+
+/* Final (open) state: identical to the end of the GSAP timeline, so the timeline can be reverted safely. */
+.stage[data-phase='open'] .curtain { transform: scaleX(var(--gathered)); will-change: auto; }
+.stage[data-phase='open'] .curtain__shade { opacity: 0.2; }
+
+.valance {
+  position: absolute;
+  z-index: 7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(38px, 7.5%, 64px);
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Invitation and skip controls                                        */
+/* ------------------------------------------------------------------ */
+.invitation {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 4rem 1.25rem 2rem;
+}
+.invitation__bubble {
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  max-width: 100%;
+  padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.5rem, 5vw, 3.5rem);
+  text-align: center;
+  color: var(--paper);
+  background: rgba(58, 18, 28, 0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(251, 246, 234, 0.25);
+  border-radius: var(--r-lg);
+  box-shadow: 0 18px 40px rgba(20, 6, 10, 0.35);
+}
+.invitation__eyebrow {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.invitation__lead {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3.4rem);
+  font-weight: 560;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.invitation .link-btn { color: var(--paper); }
+
+.skip-floating {
+  position: absolute;
+  z-index: 9;
+  right: 1rem;
+  bottom: 1rem;
+  min-height: 44px;
+  padding: 0.5rem 1.2rem;
+  font: 600 0.9rem var(--font-body);
+  color: var(--burgundy-deep);
+  background: var(--paper);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+/* "View all my work" */
+.scroll-cue--stage {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: calc(clamp(34px, 7%, 60px) + 16px);
+  translate: -50% 0;
+}
+.stage[data-pending='true'] .scroll-cue--stage { opacity: 0; visibility: hidden; }
+.stage[data-phase='open'] .scroll-cue--stage { animation: cue-in 0.7s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+@keyframes cue-in {
+  from { opacity: 0; translate: -50% 16px; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Before the curtains open                                            */
+/* ------------------------------------------------------------------ */
+.stage[data-pending='true'] .hand-wrap,
+.stage[data-pending='true'] .stage__heading,
+.stage[data-pending='true'] .tag-slot { opacity: 0; }
+.stage[data-pending='true'] .thread path { stroke-dashoffset: 1; }
+
+/* ------------------------------------------------------------------ */
+/* Compact composition: zig-zag stack under the hand                   */
+/* ------------------------------------------------------------------ */
+@media (max-width: 700px) {
+  .stage {
+    --hw: min(60vw, 240px);
+    --tag-w: 66%;
+    --gathered: 0.07;
+    height: max(840px, calc(100svh - var(--header-h)));
+  }
+
+  .hand-anchor {
+    top: calc(var(--hw) * -0.33);
+    width: var(--hw);
+    height: calc(var(--hw) * 1.25);
+    max-height: none;
+  }
+
+  .stage__heading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    padding: 0;
+  }
+
+  .tag-slot {
+    top: calc(246px + var(--i) * 114px);
+    translate: -50% 0;
+  }
+  .tag-slot:nth-child(odd) { --x: 39%; }
+  .tag-slot:nth-child(even) { --x: 61%; }
+
+  .tag__paper { padding: 1.9rem 1rem 0.9rem; }
+  .tag__number { display: none; }
+  .tag__title { font-size: 1.15rem; }
+  .tag__hint { display: none; }
+  .tag:hover .tag__line, .tag:focus-visible .tag__line { opacity: 1; }
+  .stage-lip { height: 36px; }
+  .scroll-cue--stage { bottom: 52px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag:hover .tag__paper,
+  .tag:focus-visible .tag__paper { --lift: 0px; --grow: 1; --tilt: 0deg; }
+  .curtain { will-change: auto; }
+  .stage[data-phase='open'] .scroll-cue--stage { animation: none; }
+}

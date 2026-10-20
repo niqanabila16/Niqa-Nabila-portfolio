@@ -1,0 +1,43 @@
+:root {
+  /* Paper palette */
+  --ivory: #f6efe2;
+  --cream: #efe5d1;
+  --paper: #fbf6ea;
+  --ink: #3a2a28;
+  --ink-soft: #5d4a46;
+  --terracotta: #c4755a;
+  --terracotta-light: #e8b8a2;
+  --rose: #d8a29b;
+  --rose-light: #ebc6c1;
+  --burgundy: #7a2e3b;
+  --burgundy-deep: #5c2030;
+  --sage: #8fa58a;
+  --sage-light: #bccdb7;
+  --sage-deep: #52694f;
+  --blue: #7f9bb3;
+  --blue-light: #b3c7d8;
+  --line: rgba(58, 42, 40, 0.16);
+
+  /* Type */
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'DM Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Shape and elevation */
+  --radius: 4px;
+  --r-lg: 32px;
+  --r-md: 22px;
+  --card: #ebe6dc;
+  --nav: #2a1c24;
+  --sun: #f2b824;
+  /* Illustration colours (flat shapes with thick outlines) */
+  --art-ink: #2a2020;
+  --art-paper: #faf6ec;
+  --art-red: #c4552a;
+  --art-green: #2f6f55;
+  --art-yellow: #f2cd6b;
+  --shadow-sm: 0 1px 0 rgba(58, 42, 40, 0.08), 0 3px 6px rgba(58, 42, 40, 0.1);
+  --shadow-md: 0 2px 0 rgba(58, 42, 40, 0.06), 0 10px 22px rgba(58, 42, 40, 0.16);
+
+  --header-h: 84px;
+  --container: 1120px;
+}

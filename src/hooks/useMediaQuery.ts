@@ -1,0 +1,17 @@
+import { useSyncExternalStore } from 'react'
+
+/** Subscribes to a CSS media query without effects or extra state. */
+export function useMediaQuery(query: string): boolean {
+  return useSyncExternalStore(
+    (notify) => {
+      const mq = window.matchMedia(query)
+      mq.addEventListener('change', notify)
+      return () => mq.removeEventListener('change', notify)
+    },
+    () => window.matchMedia(query).matches,
+    () => false,
+  )
+}
+
+export const useReducedMotion = () => useMediaQuery('(prefers-reduced-motion: reduce)')
+export const useCompactStage = () => useMediaQuery('(max-width: 700px)')
