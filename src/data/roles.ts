@@ -29,7 +29,7 @@ export const roles: Role[] = [
     intro:
       'I derive test cases from requirements, pick techniques that fit the risk, and report defects so that someone else can reproduce them in one pass.',
     focus: ['Test design', 'Functional testing', 'Boundary values', 'Defect reporting', 'Traceability', 'Test reporting'],
-    stack: ['googlesheets', 'excel', 'jira', 'git', 'github'],
+    stack: ['googlesheets', 'excel', 'jira', 'git', 'github', 'postman', 'selenium', 'cucumber'],
     featuredProjectIds: ['sipta-room-testing', 'swaglabs-testing'],
   },
   {
