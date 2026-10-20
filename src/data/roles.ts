@@ -14,7 +14,7 @@ export const roles: Role[] = [
     intro:
       'I start from the problem: who is affected, what the rules are, and what \u201cdone\u201d means, then write it in a form stakeholders can review and developers and testers can use.',
     focus: ['Requirements', 'Business rules', 'User stories', 'Process modelling', 'Stakeholders', 'Traceability'],
-    stack: ['jira', 'mermaid', 'excel', 'github'],
+    stack: ['jira', 'mermaid', 'excel', 'github', 'diagram.io', 'miro', 'taiga', 'dbdiagram'],
     featuredProjectIds: ['jtk-learn-srs', 'shopee-monitoring-si', 'payment-reconciliation-system'],
   },
   {
