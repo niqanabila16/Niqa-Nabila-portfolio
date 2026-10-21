@@ -4,7 +4,7 @@ import type { Role } from './types'
 export const roles: Role[] = [
   {
     id: 'business-analyst',
-    slug: 'business-analyst/System Analyst',
+    slug: 'business-analyst',
     title: 'Business Analyst',
     tagTitle: 'Business Analyst',
     tagLine: 'Requirements and process',
