@@ -5,7 +5,7 @@ export const roles: Role[] = [
   {
     id: 'business-analyst',
     slug: 'business-analyst',
-    title: 'Business Analyst',
+    title: 'Business Analyst/System Analyst',
     tagTitle: 'Business Analyst',
     tagLine: 'Requirements and process',
     tagHint: 'Requirements and documents',
